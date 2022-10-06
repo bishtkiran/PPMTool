@@ -1,6 +1,7 @@
 package com.learning.personalProjectManagementTool.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -37,6 +38,10 @@ public class Project {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updatedAt;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+    @JsonIgnore
+    private Backlog backlog;
 
     @PrePersist
     protected void onCreate(){
@@ -83,12 +88,12 @@ public class Project {
         this.description = description;
     }
 
-    public Date getStartDate() {
+    public Date getStart_date() {
         return start_date;
     }
 
-    public void setStartDate(Date startDate) {
-        this.start_date = startDate;
+    public void setStart_date(Date start_date) {
+        this.start_date = start_date;
     }
 
     public Date getEnd_date() {
@@ -113,5 +118,13 @@ public class Project {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
     }
 }
